@@ -23,16 +23,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   // Toggle the theme and save to localStorage
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
-    if (!isDarkMode) {
+ const toggleDarkMode = () => {
+  setIsDarkMode((prev) => {
+    const next = !prev;
+    if (next) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
-  };
+    return next;
+  });
+};
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
